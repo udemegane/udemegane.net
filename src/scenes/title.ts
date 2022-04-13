@@ -11,10 +11,9 @@ import {
   Texture,
   Color3,
   Vector2,
-  SceneLoader,
 } from "@babylonjs/core";
 import { WaterMaterial } from "@babylonjs/materials";
-import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
+// import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
 import "@babylonjs/loaders/glTF";
 import { SceneType } from "./sceneTypes";
 
