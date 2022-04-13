@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && npx webpack serve --port 3001",
-    "build": "webpack --mode production && pwd && cp -r public/3Dobjects dist/ && cp -r public/texture dist/"
+    "build": "webpack --mode production && pwd && ls && cp -r public/3Dobjects dist/ && cp -r public/texture dist/"
   },
   "dependencies": {
     "@babylonjs/core": "^5.0.3",
