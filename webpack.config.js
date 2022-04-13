@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const appDirectory = fs.realpathSync(process.cwd());
 module.exports = {
   entry: path.resolve(appDirectory, "src/app.ts"), // path to the main .ts file
@@ -52,6 +53,12 @@ module.exports = {
       template: path.resolve(appDirectory, "public/index.html"),
     }),
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        {from: "public/3Dobjects", to: "3Dobjects"},
+        {from: "public/texture",to:"texture"},
+      ]
+    })
   ],
   // mode: "development",
   devtool: "eval-source-map",
