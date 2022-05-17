@@ -15,20 +15,28 @@ import {
 import { WaterMaterial } from "@babylonjs/materials";
 // import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
 import "@babylonjs/loaders/glTF";
-import { SceneType } from "./sceneTypes";
+import {} from "./sceneTypes";
+import { SceneData } from "../app";
+/*
+type InitScene = (scene: Scene) => Scene;
+type SceneScript = (
+  scene: Scene,
+  onAppEventObservable: Observable<SceneData>
+) => Scene;
 
-export default function makeTitleScene(
+// export default function
+export const makeScene = (
   engine: Engine,
-  onSwitchSceneObservable: Observable<SceneType>
-): Scene {
-  return createScene(engine, onSwitchSceneObservable);
-}
+  onAppEventObservable: Observable<SceneData>
+): ((initScene: InitScene) => (sceneScript: SceneScript) => Scene) => {
+  return defineScene(engine, onAppEventObservable);
+};
+*/
 
-function createScene(
-  engine: Engine,
-  onSwitchSceneObservable: Observable<SceneType>
-): Scene {
-  const scene = new Scene(engine);
+export const titleScene = (
+  scene: Scene,
+  onAppEventObservable: Observable<SceneData>
+): Scene => {
   const camera: ArcRotateCamera = new ArcRotateCamera(
     "Camera",
     -Math.PI,
@@ -91,4 +99,4 @@ function createScene(
 
   // SceneLoader.ImportMesh("", "3Dobjects/", "UnrealMannequin_F.glb", scene);
   return scene;
-}
+};

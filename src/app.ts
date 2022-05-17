@@ -1,8 +1,65 @@
 import { Engine, Observable, Scene } from "@babylonjs/core";
 import { SceneManager } from "./sceneManager";
 import { SceneType, TaggedScene } from "./scenes/sceneTypes";
-import makeTitleScene from "./scenes/title";
+import { titleScene } from "./scenes/title";
 
+export type SceneData = {
+  tag: SceneType;
+};
+
+const createCanvas = (): HTMLCanvasElement => {
+  document.documentElement.style.overflow = "hidden";
+  document.documentElement.style.width = "100%";
+  document.documentElement.style.height = "100%";
+  document.documentElement.style.margin = "0";
+  document.documentElement.style.padding = "0";
+  document.body.style.overflow = "hidden";
+  document.body.style.width = "100%";
+  document.body.style.height = "100%";
+  document.body.style.margin = "0";
+  document.body.style.padding = "0";
+
+  const canvas = document.createElement("canvas");
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.id = "appCanvas";
+  document.body.appendChild(canvas);
+  return canvas;
+};
+
+const makeDebugMenu = (scene: Scene): Scene => {
+  window.addEventListener("keydown", (ev) => {
+    // Shift+Ctrl+Alt+I
+    if (ev.shiftKey && ev.altKey && ev.keyCode === 73) {
+      if (scene.debugLayer.isVisible()) {
+        scene.debugLayer.hide();
+      } else {
+        scene.debugLayer.show();
+      }
+    }
+  });
+  return scene;
+};
+
+const makeScene =
+  (engine: Engine, onAppEventObservable: Observable<SceneData>) =>
+  (initScene: (scene: Scene) => Scene) =>
+  (
+    sceneScript: (
+      scene: Scene,
+      onAppEventObservable: Observable<SceneData>
+    ) => Scene
+  ): Scene => {
+    return sceneScript(initScene(new Scene(engine)), onAppEventObservable);
+  };
+
+const main = () => {
+  const canvas: HTMLCanvasElement = createCanvas();
+  const engine: Engine = new Engine(canvas, true);
+  const onAppEventObservable: Observable<SceneData> = new Observable();
+  const sceneMaker = makeScene(engine, onAppEventObservable)(makeDebugMenu);
+};
+main();
 class App {
   private _currentScene: Scene;
   private _scenes: Array<TaggedScene>;
@@ -47,7 +104,7 @@ class App {
     this._scenes = [];
     this._scenes.push({
       tag: SceneType.Title,
-      scene: makeTitleScene(this._engine, this._onSwitchSceneObservable),
+      scene: makeScene(this._engine, this._onSwitchSceneObservable),
     });
   }
 
@@ -77,4 +134,4 @@ class App {
 }
 
 // eslint-disable-next-line no-unused-vars
-const app: App = new App();
+// const app: App = new App();
