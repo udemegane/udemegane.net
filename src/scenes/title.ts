@@ -1,7 +1,6 @@
 import {
   ArcRotateCamera,
   Vector3,
-  Engine,
   Observable,
   Scene,
   MeshBuilder,
@@ -15,28 +14,14 @@ import {
 import { WaterMaterial } from "@babylonjs/materials";
 // import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
 import "@babylonjs/loaders/glTF";
-import {} from "./sceneTypes";
 import { SceneData } from "../app";
-/*
-type InitScene = (scene: Scene) => Scene;
-type SceneScript = (
-  scene: Scene,
-  onAppEventObservable: Observable<SceneData>
-) => Scene;
-
-// export default function
-export const makeScene = (
-  engine: Engine,
-  onAppEventObservable: Observable<SceneData>
-): ((initScene: InitScene) => (sceneScript: SceneScript) => Scene) => {
-  return defineScene(engine, onAppEventObservable);
-};
-*/
+import { SceneType, TaggedScene } from "./sceneTypes";
 
 export const titleScene = (
   scene: Scene,
   onAppEventObservable: Observable<SceneData>
-): Scene => {
+): TaggedScene => {
+  console.log();
   const camera: ArcRotateCamera = new ArcRotateCamera(
     "Camera",
     -Math.PI,
@@ -98,5 +83,5 @@ export const titleScene = (
   })(skybox);
 
   // SceneLoader.ImportMesh("", "3Dobjects/", "UnrealMannequin_F.glb", scene);
-  return scene;
+  return { tag: SceneType.Title, scene };
 };

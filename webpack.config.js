@@ -14,7 +14,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   devServer: {
-    port: 3001, // port that we're using for local host (localhost:8080)
+    port: 8888, // port that we're using for local host (localhost:8080)
     // disableHostCheck: true,
     static: {
       directory: path.resolve(appDirectory, "public"),
@@ -60,6 +60,6 @@ module.exports = {
       ]
     })
   ],
-  // mode: "development",
+  mode: "development",
   devtool: "eval-source-map",
 };
