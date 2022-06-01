@@ -158,6 +158,10 @@ export const titleScene = (
 
   SceneLoader.ImportMesh("", "3Dobjects/", "tree_env.glb", scene);
 
+  scene.fogMode = Scene.FOGMODE_EXP;
+  scene.fogDensity = 0.02;
+  scene.fogColor = new Color3(0.9, 0.9, 1.0);
+
   const sceneMetaData: SceneData = {
     tag: SceneType.Title,
   };
