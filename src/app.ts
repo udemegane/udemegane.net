@@ -1,6 +1,9 @@
 import { Engine, Observable, Scene } from "@babylonjs/core";
 import { SceneType } from "./scenes/sceneTypes";
 import { titleScene } from "./scenes/title";
+import "@babylonjs/loaders/glTF";
+import "@babylonjs/core/Debug/debugLayer";
+import "@babylonjs/inspector";
 // import { chain, Either, getOrElse, left, right } from "fp-ts/es6/Either";
 
 export type SceneData = {
@@ -36,6 +39,7 @@ const createCanvas = (): HTMLCanvasElement => {
 const makeDebugMenu = (scene: Scene): Scene => {
   window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I
+    console.log("debug");
     if (ev.shiftKey && ev.altKey && ev.keyCode === 73) {
       if (scene.debugLayer.isVisible()) {
         scene.debugLayer.hide();
