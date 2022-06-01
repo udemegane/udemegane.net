@@ -1,5 +1,5 @@
 import { Engine, Observable, Scene } from "@babylonjs/core";
-import { SceneType, TaggedScene } from "./scenes/sceneTypes";
+import { SceneType } from "./scenes/sceneTypes";
 import { titleScene } from "./scenes/title";
 // import { chain, Either, getOrElse, left, right } from "fp-ts/es6/Either";
 
@@ -54,8 +54,8 @@ const makeScene =
     sceneScript: (
       scene: Scene,
       onAppEventObservable: Observable<SceneData>
-    ) => TaggedScene
-  ): TaggedScene => {
+    ) => Scene
+  ): Scene => {
     return sceneScript(initScene(new Scene(engine)), onAppEventObservable);
   };
 
@@ -64,11 +64,14 @@ const main = () => {
   const engine: Engine = new Engine(createCanvas(), true);
   const onAppEventObservable: Observable<SceneData> = new Observable();
   const sceneMaker = makeScene(engine, onAppEventObservable)(makeDebugMenu);
-
-  const scenes: TaggedScene[] = [sceneMaker(titleScene)];
-  console.log(`${scenes[0].tag}`);
+  const title = sceneMaker(titleScene);
+  // const scenes: TaggedScene[] = [sceneMaker(titleScene)];
+  // console.log(`${scenes[0].tag}`);
   onAppEventObservable.add((sceneData: SceneData) => {
-    const mayBeScene = scenes.find((s) => s.tag === sceneData.tag)?.scene;
+    const mayBeScene = engine.scenes.find(
+      // このas良くないので型ガードしたほうがいい
+      (s) => (s.metadata as SceneData).tag === sceneData.tag
+    );
     if (mayBeScene instanceof Scene) {
       console.log("test");
       engine.runRenderLoop(() => {

@@ -20,7 +20,7 @@ import { SceneType, TaggedScene } from "./sceneTypes";
 export const titleScene = (
   scene: Scene,
   onAppEventObservable: Observable<SceneData>
-): TaggedScene => {
+): Scene => {
   console.log();
   const camera: ArcRotateCamera = new ArcRotateCamera(
     "Camera",
@@ -83,5 +83,9 @@ export const titleScene = (
   })(skybox);
 
   // SceneLoader.ImportMesh("", "3Dobjects/", "UnrealMannequin_F.glb", scene);
-  return { tag: SceneType.Title, scene };
+  const sceneMetaData: SceneData = {
+    tag: SceneType.Title,
+  };
+  scene.metadata = sceneMetaData;
+  return scene;
 };
