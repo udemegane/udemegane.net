@@ -10,34 +10,96 @@ import {
   Texture,
   Color3,
   Vector2,
+  SceneLoader,
+  FreeCamera,
+  Mesh,
+  DefaultRenderingPipeline,
+  TargetCamera,
+  PostProcessRenderPipeline,
+  LensRenderingPipeline,
 } from "@babylonjs/core";
 import { WaterMaterial } from "@babylonjs/materials";
 // import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
 import "@babylonjs/loaders/glTF";
 import { SceneData } from "../app";
-import { SceneType, TaggedScene } from "./sceneTypes";
+import { SceneType } from "./sceneTypes";
+
+const setUpDefaultPipeline = (
+  scene: Scene,
+  camera: TargetCamera
+): DefaultRenderingPipeline => {
+  const defaultPipeline = new DefaultRenderingPipeline(
+    "defaultPipeline",
+    true,
+    scene,
+    [camera]
+  );
+  defaultPipeline.fxaaEnabled = true;
+  defaultPipeline.bloomEnabled = true;
+  defaultPipeline.bloomKernel = 20;
+  defaultPipeline.bloomWeight = 0.2;
+  return defaultPipeline;
+};
+
+const setUpLensRenderingPipeline = (
+  scene: Scene,
+  camera: TargetCamera
+): LensRenderingPipeline => {
+  const params = {
+    edge_blur: 1.0,
+    chromatic_aberration: 1.0,
+    distortion: 1.0,
+    dof_focus_distance: 50,
+    dof_aperture: 6.0, // set this very high for tilt-shift effect
+    grain_amount: 1.0,
+    dof_pentagon: true,
+    dof_gain: 1.0,
+    dof_threshold: 1.0,
+    dof_darken: 0.25,
+  };
+  const lensPipeline = new LensRenderingPipeline(
+    "lenspipeline",
+    params,
+    scene,
+    1.0,
+    [camera]
+  );
+  return lensPipeline;
+};
+
+const setUpPostProcess = (scene: Scene, camera: TargetCamera): Scene => {
+  scene.postProcessRenderPipelineManager.addPipeline(
+    setUpDefaultPipeline(scene, camera)
+  );
+  scene.postProcessRenderPipelineManager.addPipeline(
+    setUpLensRenderingPipeline(scene, camera)
+  );
+
+  return scene;
+};
 
 export const titleScene = (
   scene: Scene,
   onAppEventObservable: Observable<SceneData>
 ): Scene => {
   console.log();
-  const camera: ArcRotateCamera = new ArcRotateCamera(
-    "Camera",
-    -Math.PI,
-    Math.PI / 2,
-    2,
-    new Vector3(0.0, 15.0, 0.0),
-    scene
-  );
-  camera.attachControl(true);
+  const camera: FreeCamera = ((camera) => {
+    const deg2rad = (deg: number) => {
+      return deg * (Math.PI / 180);
+    };
+    camera.rotation = new Vector3(deg2rad(5), deg2rad(195), 0);
+    camera.fov = 0.5;
+    camera.attachControl(true);
+
+    return camera;
+  })(new FreeCamera("freeCam", new Vector3(-2.055, 1.15, 6.44), scene));
+  scene = setUpPostProcess(scene, camera);
   // eslint-disable-next-line no-unused-vars
   const light = new HemisphericLight(
     "ambientLight",
     new Vector3(0, 1, 0),
     scene
   );
-
   // skybox
   const skybox = (() => {
     const skybox = MeshBuilder.CreateBox(
@@ -58,7 +120,7 @@ export const titleScene = (
   })();
 
   // water
-  ((skybox) => {
+  const waterPlane = (skybox: Mesh) => {
     // eslint-disable-next-line no-unused-vars
     const waterMesh = MeshBuilder.CreateGround(
       "ground",
@@ -80,9 +142,10 @@ export const titleScene = (
     waterMaterial.addToRenderList(skybox);
     waterMesh.material = waterMaterial;
     // return waterMesh;
-  })(skybox);
+  };
 
-  // SceneLoader.ImportMesh("", "3Dobjects/", "UnrealMannequin_F.glb", scene);
+  SceneLoader.ImportMesh("", "3Dobjects/", "tree_env.glb", scene);
+
   const sceneMetaData: SceneData = {
     tag: SceneType.Title,
   };
