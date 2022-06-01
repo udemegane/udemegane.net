@@ -1,5 +1,4 @@
 import {
-  ArcRotateCamera,
   Vector3,
   Observable,
   Scene,
@@ -15,14 +14,26 @@ import {
   Mesh,
   DefaultRenderingPipeline,
   TargetCamera,
-  PostProcessRenderPipeline,
   LensRenderingPipeline,
 } from "@babylonjs/core";
 import { WaterMaterial } from "@babylonjs/materials";
 // import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
 import "@babylonjs/loaders/glTF";
+import { Pane } from "tweakpane";
 import { SceneData } from "../app";
 import { SceneType } from "./sceneTypes";
+
+const setUpDebugUI = (paramsArr: Object[]) => {
+  const pane = new Pane();
+  paramsArr.forEach((params) => {
+    Object.keys(params).forEach((k) => {
+      // typescriptに敗北しました。反省しています。
+      // そのうち直しますが、今は眠いです。
+      const key = k as keyof Object;
+      pane.addInput(params, key);
+    });
+  });
+};
 
 const setUpDefaultPipeline = (
   scene: Scene,
@@ -57,6 +68,7 @@ const setUpLensRenderingPipeline = (
     dof_threshold: 1.0,
     dof_darken: 0.25,
   };
+  setUpDebugUI([params]);
   const lensPipeline = new LensRenderingPipeline(
     "lenspipeline",
     params,
