@@ -23,16 +23,9 @@ import { Pane } from "tweakpane";
 import { SceneData } from "../app";
 import { SceneType } from "./sceneTypes";
 
-const setUpDebugUI = (paramsArr: Object[]) => {
-  const pane = new Pane();
-  paramsArr.forEach((params) => {
-    Object.keys(params).forEach((k) => {
-      // typescriptに敗北しました。反省しています。
-      // そのうち直しますが、今は眠いです。
-      const key = k as keyof Object;
-      pane.addInput(params, key);
-    });
-  });
+// WIP
+const setUpDebugUI = (pane: Pane)=>(bindFunc: (pane:Pane)=>void) => {
+  bindFunc(pane);
 };
 
 const setUpDefaultPipeline = (
@@ -68,7 +61,7 @@ const setUpLensRenderingPipeline = (
     dof_threshold: 1.0,
     dof_darken: 0.25,
   };
-  setUpDebugUI([params]);
+  
   const lensPipeline = new LensRenderingPipeline(
     "lenspipeline",
     params,
@@ -76,6 +69,7 @@ const setUpLensRenderingPipeline = (
     1.0,
     [camera]
   );
+  
   return lensPipeline;
 };
 
