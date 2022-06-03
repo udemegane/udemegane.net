@@ -14,6 +14,11 @@ export const initParams = {
     exposure: 0.08,
     density: 0.8,
   },
+  twitter: {
+    position: new Vector3(-2.805, 0.61, 5.166),
+    rotation: new Vector3(deg2rad(-58.7), deg2rad(12.35), deg2rad(169.9)),
+    scale: new Vector3(0.018, -0.018, 0.018),
+  },
   postprocess: {
     default: {
       tone_mapping: true,
@@ -29,9 +34,9 @@ export const initParams = {
       },
       dof: {
         enabled: true,
-        focus_distance: 3100,
-        f_stop: 1.5,
-        focal_length: 150,
+        focus_distance: 2000,
+        f_stop: 6.0,
+        focal_length: 190,
       },
       chromatic_aberration: {
         enabled: true,
