@@ -7,10 +7,12 @@ export const initParams = {
     position: new Vector3(-2.055, 1.15, 6.44),
     rotation: new Vector3(deg2rad(7.7), deg2rad(193), 0),
   },
-  scatter: {
+  godray: {
     position: new Vector3(0.9, 2.9, -11),
     rotation: new Vector3(deg2rad(308), deg2rad(27.1), deg2rad(1.4)),
     scale: new Vector3(5, 10, 1),
+    exposure: 0.08,
+    density: 0.8,
   },
   postprocess: {
     default: {
