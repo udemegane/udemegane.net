@@ -369,7 +369,14 @@ const setGodrayEffect = (
   scene.onBeforeRenderObservable.add((eventData) => {
     vibratePosition();
   });
-  //scene.beforeRender = vibratePosition(0, 0.1);
+  return scene;
+};
+
+const setFog = (scene: Scene) => {
+  scene.fogMode = Scene.FOGMODE_EXP2;
+  scene.fogDensity = 0.02;
+  scene.fogColor = new Color3(0.9, 0.9, 1.0);
+  return scene;
 };
 
 const setUpPostProcess = (scene: Scene, camera: TargetCamera): Scene => {
@@ -378,12 +385,10 @@ const setUpPostProcess = (scene: Scene, camera: TargetCamera): Scene => {
   scene.postProcessRenderPipelineManager.addPipeline(
     setUpDefaultPipeline(scene, camera)
   );
-  setGodrayEffect(scene, camera);
+  // setGodrayEffect(scene, camera);
+  // setFog(scene);
 
-  scene.fogMode = Scene.FOGMODE_EXP2;
-  scene.fogDensity = 0.02;
-  scene.fogColor = new Color3(0.9, 0.9, 1.0);
-  return scene;
+  return setFog(setGodrayEffect(scene, camera));
 };
 
 export const titleScene = (
@@ -404,8 +409,9 @@ export const titleScene = (
     new Vector3(0, 1, 0),
     scene
   );
+
   // skybox
-  const skybox = (() => {
+  const skybox = ((scene: Scene) => {
     const skybox = MeshBuilder.CreateBox(
       "sky",
       {
@@ -421,7 +427,7 @@ export const titleScene = (
     skyMaterial.roughness = 0.2;
     skybox.material = skyMaterial;
     return skybox;
-  })();
+  })(scene);
 
   // water
   const waterPlane = (skybox: Mesh) => {
