@@ -27,6 +27,12 @@ import { initParams } from "./mainSceneInitParams";
 import { SceneData } from "../app";
 import { SceneType } from "./sceneTypes";
 
+const tickEvent =
+  (base: number, delta: number) => (cb: (tick: number) => void) => () => {
+    cb((base += delta));
+  };
+const tickOne = tickEvent(0, 1);
+
 // WIP
 const setUpDebugUI =
   (pane: Pane) => (name: string, bindFunc: (f: FolderApi) => void) => {
@@ -340,12 +346,30 @@ const setGodrayEffect = (
     Texture.BILINEAR_SAMPLINGMODE,
     scene.getEngine()
   );
+  const params = initParams.godray;
   godrays.useDiffuseColor = true;
-  godrays.mesh.position = initParams.scatter.position;
-  godrays.mesh.rotation = initParams.scatter.rotation;
-  godrays.mesh.scaling = initParams.scatter.scale;
-  godrays.exposure = 0.08;
-  godrays.density = 0.8;
+  godrays.mesh.position = params.position;
+  godrays.mesh.rotation = params.rotation;
+  godrays.mesh.scaling = params.scale;
+  godrays.exposure = params.exposure;
+  godrays.density = params.density;
+
+  const vibratePosition = tickOne((tick: number) => {
+    const rand = Math.random();
+    godrays.mesh.position.x =
+      params.position.x +
+      Math.sin(tick * 0.003 + rand * 0.03) * 0.0005 +
+      Math.cos(tick * 0.004 + rand * 0.02) * 0.0003;
+    godrays.mesh.position.y =
+      params.position.y + Math.cos(tick * 0.002 + rand * 0.02) * 0.0003;
+    godrays.exposure =
+      params.exposure + Math.sin(tick * 0.0005 + rand * 0.005) * 0.01;
+  });
+
+  scene.onBeforeRenderObservable.add((eventData) => {
+    vibratePosition();
+  });
+  //scene.beforeRender = vibratePosition(0, 0.1);
 };
 
 const setUpPostProcess = (scene: Scene, camera: TargetCamera): Scene => {
