@@ -4,8 +4,8 @@ const deg2rad = (deg: number) => (deg * Math.PI) / 180;
 
 export const initParams = {
   camera: {
-    position: new Vector3(-2.055, 1.15, 6.44),
-    rotation: new Vector3(deg2rad(7.7), deg2rad(193), 0),
+    position: new Vector3(-2.055, 1.25, 6.44),
+    rotation: new Vector3(deg2rad(13), deg2rad(193), 0),
   },
   godray: {
     position: new Vector3(0.9, 2.9, -11),
