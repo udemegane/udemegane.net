@@ -1,5 +1,4 @@
 import {
-  AbstractMesh,
   Color3,
   Color4,
   CubeTexture,
@@ -10,6 +9,7 @@ import {
   LensRenderingPipeline,
   Mesh,
   MeshBuilder,
+  Nullable,
   Observable,
   PBRMaterial,
   Scene,
@@ -22,25 +22,14 @@ import {
   VolumetricLightScatteringPostProcess,
 } from "@babylonjs/core";
 import { WaterMaterial } from "@babylonjs/materials";
+import { GUI3DManager, MeshButton3D } from "@babylonjs/gui";
 // import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
 import "@babylonjs/loaders/glTF";
 import { FolderApi, InputParams, Pane } from "tweakpane";
 import { initParams } from "./mainSceneInitParams";
 import { SceneData } from "../app";
 import { SceneType } from "./sceneTypes";
-import { GUI3DManager, MeshButton3D } from "@babylonjs/gui";
-
-function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
-  if (val === undefined || val === null) {
-    throw new Error(`Expected 'val' to be defined, but received ${val}`);
-  }
-}
-
-const tickEvent =
-  (base: number, delta: number) => (cb: (tick: number) => void) => () => {
-    cb((base += delta));
-  };
-const tickOne = tickEvent(0, 1);
+import { tickOne, assertIsDefined, colors } from "../util";
 
 // WIP
 const setUpDebugUI =
@@ -55,7 +44,9 @@ const setUpDebugUI =
 const setUpDefaultPipeline = (
   scene: Scene,
   camera: TargetCamera,
-  paramController?: (name: string, bindFunc: (f: FolderApi) => void) => void
+  paramController?: Nullable<
+    (name: string, bindFunc: (f: FolderApi) => void) => void
+  >
 ): DefaultRenderingPipeline => {
   const defaultPipeline = new DefaultRenderingPipeline(
     "defaultPipeline",
@@ -277,7 +268,9 @@ const setUpDefaultPipeline = (
 const setUpLensRenderingPipeline = (
   scene: Scene,
   camera: TargetCamera,
-  paramController?: (name: string, bindFunc: (f: FolderApi) => void) => void
+  paramController?: Nullable<
+    (name: string, bindFunc: (f: FolderApi) => void) => void
+  >
 ): LensRenderingPipeline => {
   const params = initParams.postprocess.lens;
 
@@ -344,7 +337,9 @@ const setUpLensRenderingPipeline = (
 const setGodrayEffect = (
   scene: Scene,
   camera: TargetCamera,
-  paramController?: (name: string, bindFunc: (f: FolderApi) => void) => void
+  paramController?: Nullable<
+    (name: string, bindFunc: (f: FolderApi) => void) => void
+  >
 ) => {
   const godrays = new VolumetricLightScatteringPostProcess(
     "godrays",
@@ -389,10 +384,21 @@ const setFog = (scene: Scene) => {
 };
 
 const setUpPostProcess = (scene: Scene, camera: TargetCamera): Scene => {
-  const paramController = setUpDebugUI(new Pane());
+  const paramController = ((flag: string | undefined) => {
+    if (flag === "true") {
+      console.info(`
+        [${colors.blue("INFO")}] env.DEBUG_GUI is ${
+        process.env.DEBUG_GUI
+      }. Construct Tweakpane debug GUI.
+      `);
+      return setUpDebugUI(new Pane());
+    } else {
+      return null;
+    }
+  })(process.env.DEBUG_GUI);
   // scene.postProcessRenderPipelineManager.addPipeline(setUpLensRenderingPipeline(scene, camera, paramController));
   scene.postProcessRenderPipelineManager.addPipeline(
-    setUpDefaultPipeline(scene, camera)
+    setUpDefaultPipeline(scene, camera, paramController)
   );
   // setGodrayEffect(scene, camera);
   // setFog(scene);
@@ -404,12 +410,11 @@ const createLinkButton = (mesh: Mesh, link: string) => {
   const name = link.split(/(\/+)/)[2];
   assertIsDefined(name);
   const pushButton = new MeshButton3D(mesh, name);
-  console.log(pushButton);
   pushButton.onPointerEnterObservable.add((eventData) => {
     console.log(`Enter to ${name}`);
   });
   pushButton.onPointerClickObservable.add((eventData) => {
-    window.open(link, "twitter");
+    window.open(link, name);
   });
   return pushButton;
 };
@@ -434,6 +439,7 @@ export const titleScene = (
     new Vector3(0, 1, 0),
     scene
   );
+  light.intensity = 0.6;
 
   // skybox
   const skybox = ((scene: Scene) => {
