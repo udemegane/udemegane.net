@@ -3,6 +3,7 @@ const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 const appDirectory = fs.realpathSync(process.cwd());
 module.exports = {
   entry: path.resolve(appDirectory, "src/app.ts"), // path to the main .ts file
@@ -58,7 +59,8 @@ module.exports = {
         {from: "public/3Dobjects", to: "3Dobjects"},
         {from: "public/texture",to:"texture"},
       ]
-    })
+    }),
+    new Dotenv()
   ],
   mode: "development",
   devtool: "eval-source-map",
