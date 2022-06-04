@@ -4,6 +4,7 @@ import { titleScene } from "./scenes/title";
 import "@babylonjs/loaders/glTF";
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
+import { colors } from "./util";
 // import { chain, Either, getOrElse, left, right } from "fp-ts/es6/Either";
 
 export type SceneData = {
@@ -39,7 +40,6 @@ const createCanvas = (): HTMLCanvasElement => {
 const makeDebugMenu = (scene: Scene): Scene => {
   window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I
-    console.log("debug");
     if (ev.shiftKey && ev.altKey && ev.keyCode === 73) {
       if (scene.debugLayer.isVisible()) {
         scene.debugLayer.hide();
@@ -63,11 +63,21 @@ const makeScene =
     return sceneScript(initScene(new Scene(engine)), onAppEventObservable);
   };
 
-const main = () => {
+export const main = () => {
   // const canvas: HTMLCanvasElement = createCanvas();
   const engine: Engine = new Engine(createCanvas(), true);
   const onAppEventObservable: Observable<SceneData> = new Observable();
-  const sceneMaker = makeScene(engine, onAppEventObservable)(makeDebugMenu);
+  const initScene = ((flag: string | undefined) => {
+    if (flag === "true") {
+      console.info(`
+      [${colors.blue(
+        "INFO"
+      )}] env.INSPECTOR is true. Construct babylon inspector and scene explorer.
+      `);
+      return makeDebugMenu;
+    } else return (scene: Scene) => scene;
+  })(process.env.INSPECTOR);
+  const sceneMaker = makeScene(engine, onAppEventObservable)(initScene);
   const title = sceneMaker(titleScene);
   // const scenes: TaggedScene[] = [sceneMaker(titleScene)];
   // console.log(`${scenes[0].tag}`);
