@@ -1,0 +1,3 @@
+[submodule "src/private_files"]
+	path = src/private_files
+	url = git@github.com:udemegane/files_for_udemegane.net.git
