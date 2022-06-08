@@ -39,6 +39,7 @@
     "@babylonjs/inspector": "^5.6.0",
     "@babylonjs/loaders": "^5.6.0",
     "@babylonjs/materials": "^5.6.0",
+    "crypto-js": "^4.1.1",
     "tweakpane": "^3.0.5"
   }
 }
