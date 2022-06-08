@@ -1,4 +1,4 @@
-import { Color3, Vector3 } from "@babylonjs/core";
+import { Vector3 } from "@babylonjs/core";
 
 const deg2rad = (deg: number) => (deg * Math.PI) / 180;
 
@@ -34,8 +34,8 @@ export const initParams = {
       },
       dof: {
         enabled: true,
-        focus_distance: 2000,
-        f_stop: 6.0,
+        focus_distance: 2500,
+        f_stop: 4.0,
         focal_length: 190,
       },
       chromatic_aberration: {

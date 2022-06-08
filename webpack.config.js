@@ -34,7 +34,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: "ts-loader",
-        exclude: /(node_modules|src\/wasm)/,
+        exclude: /(node_modules|src\/wasm|src\/private_files)/,
       },
       {
         test: /\.(png|jpg|gif|env|glb|stl)$/i,
@@ -44,7 +44,7 @@ module.exports = {
                 limit: 8192,
             },
         }, ],
-        exclude: /node_modules/,
+        exclude: /(node_modules|src\/private_files)/,
       }
     ],
   },
