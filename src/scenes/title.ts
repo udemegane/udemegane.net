@@ -28,8 +28,10 @@ import "@babylonjs/loaders/glTF";
 import { FolderApi, InputParams, Pane } from "tweakpane";
 import { initParams } from "./mainSceneInitParams";
 import { SceneData } from "../app";
-import { SceneType } from "./sceneTypes";
+import { SceneScript, SceneType } from "./sceneTypes";
 import { tickOne, assertIsDefined, colors } from "../util";
+
+// eslint-disable-next-line camelcase
 
 // WIP
 const setUpDebugUI =
@@ -421,10 +423,11 @@ const createLinkButton = (mesh: Mesh, link: string) => {
 
 const setUp3DGUI = (scene: Scene) => {};
 
-export const titleScene = (
+export const titleScene: SceneScript = (
   scene: Scene,
   onAppEventObservable: Observable<SceneData>
-): Scene => {
+): Promise<Scene> => {
+  console.log("TitleScene");
   const camera: FreeCamera = ((camera) => {
     camera.rotation = initParams.camera.rotation;
     camera.fov = 0.5;
@@ -484,14 +487,17 @@ export const titleScene = (
     waterMesh.material = waterMaterial;
     // return waterMesh;
   };
-  SceneLoader.ImportMesh("", "3Dobjects/", "tree_env.glb", scene, (meshes) => {
+  /*
+  const loadedMeshPromise = loadEncryptedFileAsync(scene, env, env_iv);
+  loadedMeshPromise.then((result) => {
+    const meshes = result.meshes;
     const guiManager = new GUI3DManager(scene);
     const anchor = new TransformNode("anchor");
     anchor.scaling = new Vector3(1.0, 1.0, -1.0);
     const twitterMesh = meshes.find((mesh) => mesh.name === "Twitter");
     if (twitterMesh instanceof Mesh) {
-      const pos = twitterMesh.getAbsolutePosition();
-      const scale = twitterMesh.scaling;
+      // const pos = twitterMesh.getAbsolutePosition();
+      // const scale = twitterMesh.scaling;
       const twitterButton = createLinkButton(
         twitterMesh,
         "https://twitter.com/udemegane"
@@ -508,10 +514,39 @@ export const titleScene = (
       console.warn("twitterMesh is not instance of babylon Mesh");
     }
   });
+  */
 
+  SceneLoader.ImportMesh("", "3Dobjects/", "tree_env.glb", scene, (meshes) => {
+    const guiManager = new GUI3DManager(scene);
+    const anchor = new TransformNode("anchor");
+    anchor.scaling = new Vector3(1.0, 1.0, -1.0);
+    const twitterMesh = meshes.find((mesh) => mesh.name === "Twitter");
+    if (twitterMesh instanceof Mesh) {
+      const twitterButton = createLinkButton(
+        twitterMesh,
+        "https://twitter.com/udemegane"
+      );
+      twitterButton.linkToTransformNode(anchor);
+      twitterButton.pointerEnterAnimation = () => {};
+      twitterButton.pointerOutAnimation = () => {};
+      guiManager.addControl(twitterButton);
+      twitterButton.pointerEnterAnimation();
+      twitterMesh.position = initParams.twitter.position;
+      twitterMesh.rotation = initParams.twitter.rotation;
+      twitterMesh.scaling = initParams.twitter.scale;
+    } else {
+      console.warn("twitterMesh is not instance of babylon Mesh");
+    }
+  });
+  // const iv = Buffer.from(env_iv, "hex");
+  // console.log(iv);
   const sceneMetaData: SceneData = {
     tag: SceneType.Title,
   };
   scene.metadata = sceneMetaData;
+
+  return main(scene);
+};
+const main = async (scene: Scene) => {
   return scene;
 };

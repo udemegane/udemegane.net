@@ -1,12 +1,12 @@
-import { Engine, Observable, Scene } from "@babylonjs/core";
-import { SceneType } from "./scenes/sceneTypes";
+import { Engine, KeyboardEventTypes, Observable, Scene } from "@babylonjs/core";
+import { SceneScript, SceneType } from "./scenes/sceneTypes";
 import { titleScene } from "./scenes/title";
 import "@babylonjs/loaders/glTF";
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import { colors } from "./util";
+import { debugScene } from "./scenes/debugScene";
 // import { chain, Either, getOrElse, left, right } from "fp-ts/es6/Either";
-
 export type SceneData = {
   tag: SceneType;
 };
@@ -37,7 +37,7 @@ const createCanvas = (): HTMLCanvasElement => {
   return canvas;
 };
 
-const makeDebugMenu = (scene: Scene): Scene => {
+const attachDebugMenu = (scene: Scene) => {
   window.addEventListener("keydown", (ev) => {
     // Shift+Ctrl+Alt+I
     if (ev.shiftKey && ev.altKey && ev.keyCode === 73) {
@@ -48,37 +48,58 @@ const makeDebugMenu = (scene: Scene): Scene => {
       }
     }
   });
-  return scene;
 };
 
 const makeScene =
   (engine: Engine, onAppEventObservable: Observable<SceneData>) =>
-  (initScene: (scene: Scene) => Scene) =>
-  (
-    sceneScript: (
-      scene: Scene,
-      onAppEventObservable: Observable<SceneData>
-    ) => Scene
-  ): Scene => {
-    return sceneScript(initScene(new Scene(engine)), onAppEventObservable);
+  (initScene: (scene: Scene, obs: Observable<SceneData>) => Scene) =>
+  (sceneScript: SceneScript): Promise<Scene> => {
+    return sceneScript(
+      initScene(new Scene(engine), onAppEventObservable),
+      onAppEventObservable
+    );
   };
 
-export const main = () => {
+const sceneChanger = (scene: Scene, obs: Observable<SceneData>): Scene => {
+  scene.onKeyboardObservable.add((keyInfo) => {
+    if (keyInfo.type === KeyboardEventTypes.KEYDOWN) {
+      switch (keyInfo.event.code) {
+        case "Key1":
+          obs.notifyObservers({ tag: SceneType.Title });
+          break;
+        case "Key2":
+          obs.notifyObservers({ tag: SceneType.Debug });
+          break;
+        default:
+          break;
+      }
+    }
+  });
+  return scene;
+};
+
+export const main = async () => {
   // const canvas: HTMLCanvasElement = createCanvas();
   const engine: Engine = new Engine(createCanvas(), true);
+  window.addEventListener("resize", (ev) => {
+    engine.resize();
+  });
   const onAppEventObservable: Observable<SceneData> = new Observable();
   const initScene = ((flag: string | undefined) => {
     if (flag === "true") {
       console.info(`
       [${colors.blue(
         "INFO"
-      )}] env.INSPECTOR is true. Construct babylon inspector and scene explorer.
+      )}]: env.DEBUG is true. create and implement scene changer.
       `);
-      return makeDebugMenu;
+      return sceneChanger;
     } else return (scene: Scene) => scene;
-  })(process.env.INSPECTOR);
+  })(process.env.DEBUG);
   const sceneMaker = makeScene(engine, onAppEventObservable)(initScene);
-  const title = sceneMaker(titleScene);
+  const title = await sceneMaker(titleScene);
+  const debug = await sceneMaker(debugScene);
+  console.info(`${colors.cyan("LOG")} ${title.uid}`);
+  console.info(`${colors.cyan("LOG")} ${debug.uid}`);
   // const scenes: TaggedScene[] = [sceneMaker(titleScene)];
   // console.log(`${scenes[0].tag}`);
   onAppEventObservable.add((sceneData: SceneData) => {
@@ -87,14 +108,29 @@ export const main = () => {
       (s) => (s.metadata as SceneData).tag === sceneData.tag
     );
     if (mayBeScene instanceof Scene) {
-      console.log("test");
+      const currentScene = mayBeScene;
+      const tryToAttachDebugLayer = (
+        flag: string | undefined,
+        scene: Scene
+      ) => {
+        if (flag === "true") {
+          console.info(
+            `[${colors.blue(
+              "INFO"
+            )}]:env.INSPECTOR is true. attach babylon inspector and scene explorer.`
+          );
+          return attachDebugMenu(scene);
+        }
+      };
+      tryToAttachDebugLayer(process.env.INSPECTOR, currentScene);
+
       engine.runRenderLoop(() => {
-        mayBeScene.render();
+        currentScene.render();
       });
     } else {
       console.warn("読み込みが終わってないよ");
     }
   });
-  onAppEventObservable.notifyObservers({ tag: SceneType.Title });
+  onAppEventObservable.notifyObservers({ tag: SceneType.Debug });
 };
 main();
