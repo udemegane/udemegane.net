@@ -1,0 +1,57 @@
+Exporter version: 2.93.5, Blender version: 2.93.5
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		Inline textures     :  false
+		Material Type       :  PBR
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		Keep Z-up r-handed  :  no
+		Texture directory   :  G:\3DCG\Projects\Protagonist\mainCharacter\assets\babylon\
+	Python World class constructor completed
+	WARNING: No active camera has been assigned, or is not in a currently enabled collection
+	processing begun of skeleton:  Armature.001, id:  0
+		processing begun of bone:  root_hair, index:  0
+		processing begun of bone:  pelvis, index:  1
+		processing begun of bone:  spine_01.x, index:  2
+		processing begun of bone:  spine_02.x, index:  3
+		processing begun of bone:  spine_03.x, index:  4
+		processing begun of bone:  neck.x, index:  5
+		processing begun of bone:  head.x, index:  6
+	processing begun of mesh:  hair_uv4:Group65000
+		processing begun of material:  hair_uv4:initialShadingGroup1
+			WARNING: unsupported node type(ShaderNodeBump) will trigger baking
+			processing texture hair_uv_BaseColor
+				WARNING: Exception during copy:
+					[Errno 2] No such file or directory: 'hair_uv_BaseColor.png'
+				texture type:  diffuseTexture, mapped using: "map1"
+			processing texture hair_uv_Roughness
+				WARNING: Exception during copy:
+					[Errno 2] No such file or directory: 'hair_uv_Roughness.png'
+				texture type:  specularTexture, mapped using: "map1"
+			processing texture hair_uv_Displacement
+				WARNING: Exception during copy:
+					[Errno 2] No such file or directory: 'hair_uv_Displacement.png'
+				texture type:  bumpTexture, mapped using: "map1"
+			bake time:  0 min, 0.007 secs
+		Custom split normals with tangents being used
+		num positions      :  2860
+		num normals        :  2860
+		num tangents       :  11440
+		num uvs            :  5720
+		num uvs2           :  0
+		num colors         :  0
+		num triangles      :  3616
+		Skeleton stats:  
+			Total Influencers:  2860
+			Avg # of influencers per vertex:  1
+			Highest # of influencers observed:  1, num vertices with this:  2860
+			exported as 1 influencers
+			num skeletonWeights and skeletonIndices:  11440
+========= Writing of JSON file started =========
+	writing mesh:  hair_uv4:Group65000
+========= Writing of JSON file completed =========
+========= end of processing =========
+elapsed time:  0 min, 0.4623 secs

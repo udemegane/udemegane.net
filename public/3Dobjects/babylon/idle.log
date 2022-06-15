@@ -1,0 +1,129 @@
+Exporter version: 2.93.5, Blender version: 2.93.5
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		Inline textures     :  false
+		Material Type       :  PBR
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		Keep Z-up r-handed  :  no
+		Texture directory   :  G:\3DCG\Projects\Protagonist\mainCharacter\fromMaya\
+	Python World class constructor completed
+	WARNING: No active camera has been assigned, or is not in a currently enabled collection
+	processing begun of skeleton:  Armature.004, id:  0
+		processing begun of bone:  root, index:  0
+		processing begun of bone:  pelvis_x, index:  1
+		processing begun of bone:  spine_01_x, index:  2
+		processing begun of bone:  spine_02_x, index:  3
+		processing begun of bone:  c_chest_l, index:  4
+		processing begun of bone:  c_chest_r, index:  5
+		processing begun of bone:  spine_03_x, index:  6
+		processing begun of bone:  neck_x, index:  7
+		processing begun of bone:  head_x, index:  8
+		processing begun of bone:  c_cheak_l, index:  9
+		processing begun of bone:  c_cheak_r, index:  10
+		processing begun of bone:  c_eye_root_l, index:  11
+		processing begun of bone:  c_eye_l, index:  12
+		processing begun of bone:  c_eyelid_01_l, index:  13
+		processing begun of bone:  c_eyelid_02_l, index:  14
+		processing begun of bone:  c_eyelid_03_l, index:  15
+		processing begun of bone:  c_eyelid_04_l, index:  16
+		processing begun of bone:  c_eyelid_05_l, index:  17
+		processing begun of bone:  c_eyelid_06_l, index:  18
+		processing begun of bone:  c_eyelid_07_l, index:  19
+		processing begun of bone:  c_eyelid_08_l, index:  20
+		processing begun of bone:  c_eye_root_r, index:  21
+		processing begun of bone:  c_eye_r, index:  22
+		processing begun of bone:  c_eyelid_01_r, index:  23
+		processing begun of bone:  c_eyelid_02_r, index:  24
+		processing begun of bone:  c_eyelid_03_r, index:  25
+		processing begun of bone:  c_eyelid_04_r, index:  26
+		processing begun of bone:  c_eyelid_05_r, index:  27
+		processing begun of bone:  c_eyelid_06_r, index:  28
+		processing begun of bone:  c_eyelid_07_r, index:  29
+		processing begun of bone:  c_eyelid_08_r, index:  30
+		processing begun of bone:  c_eyebrow_root_l, index:  31
+		processing begun of bone:  c_eyebrow_01_l, index:  32
+		processing begun of bone:  c_eyebrow_02_l, index:  33
+		processing begun of bone:  c_eyebrow_03_l, index:  34
+		processing begun of bone:  c_eyebrow_04_l, index:  35
+		processing begun of bone:  c_eyebrow_root_r, index:  36
+		processing begun of bone:  c_eyebrow_01_r, index:  37
+		processing begun of bone:  c_eyebrow_02_r, index:  38
+		processing begun of bone:  c_eyebrow_03_r, index:  39
+		processing begun of bone:  c_eyebrow_04_r, index:  40
+		processing begun of bone:  c_nose_x, index:  41
+		processing begun of bone:  c_temple_l, index:  42
+		processing begun of bone:  c_temple_r, index:  43
+		processing begun of bone:  shoulder_l, index:  44
+		processing begun of bone:  arm_stretch_l, index:  45
+		processing begun of bone:  forearm_stretch_l, index:  46
+		processing begun of bone:  hand_l, index:  47
+		processing begun of bone:  c_index1_l, index:  48
+		processing begun of bone:  c_index2_l, index:  49
+		processing begun of bone:  c_index3_l, index:  50
+		processing begun of bone:  c_middle1_l, index:  51
+		processing begun of bone:  c_middle2_l, index:  52
+		processing begun of bone:  c_middle3_l, index:  53
+		processing begun of bone:  c_pinky1_l, index:  54
+		processing begun of bone:  c_pinky2_l, index:  55
+		processing begun of bone:  c_pinky3_l, index:  56
+		processing begun of bone:  c_ring1_l, index:  57
+		processing begun of bone:  c_ring2_l, index:  58
+		processing begun of bone:  c_ring3_l, index:  59
+		processing begun of bone:  c_thumb1_l, index:  60
+		processing begun of bone:  c_thumb2_l, index:  61
+		processing begun of bone:  c_thumb3_l, index:  62
+		processing begun of bone:  shoulder_r, index:  63
+		processing begun of bone:  arm_stretch_r, index:  64
+		processing begun of bone:  forearm_stretch_r, index:  65
+		processing begun of bone:  hand_r, index:  66
+		processing begun of bone:  c_index1_r, index:  67
+		processing begun of bone:  c_index2_r, index:  68
+		processing begun of bone:  c_index3_r, index:  69
+		processing begun of bone:  c_middle1_r, index:  70
+		processing begun of bone:  c_middle2_r, index:  71
+		processing begun of bone:  c_middle3_r, index:  72
+		processing begun of bone:  c_pinky1_r, index:  73
+		processing begun of bone:  c_pinky2_r, index:  74
+		processing begun of bone:  c_pinky3_r, index:  75
+		processing begun of bone:  c_ring1_r, index:  76
+		processing begun of bone:  c_ring2_r, index:  77
+		processing begun of bone:  c_ring3_r, index:  78
+		processing begun of bone:  c_thumb1_r, index:  79
+		processing begun of bone:  c_thumb2_r, index:  80
+		processing begun of bone:  c_thumb3_r, index:  81
+		processing begun of bone:  thigh_stretch_l, index:  82
+		processing begun of bone:  leg_stretch_l, index:  83
+		processing begun of bone:  foot_l, index:  84
+		processing begun of bone:  toes_01_l, index:  85
+		processing begun of bone:  thigh_stretch_r, index:  86
+		processing begun of bone:  leg_stretch_r, index:  87
+		processing begun of bone:  foot_r, index:  88
+		processing begun of bone:  toes_01_r, index:  89
+		processing action Take 001:  in[1 - 31], out[0 - 31]
+	processing begun of mesh:  baseBody2:Group29620.003
+		processing begun of material:  lambert28
+		processing begun of material:  lambert29
+		processing begun of material:  lambert30
+		processing begun of multimaterial:  idle.Multimaterial#0
+		Custom split normals with tangents being used
+		num positions      :  9050
+		num normals        :  9050
+		num tangents       :  36200
+		num uvs            :  18100
+		num uvs2           :  0
+		num colors         :  0
+		num triangles      :  13570
+		Skeleton stats:  
+			WARNING: Maximum # of influencers exceeded for 31 vertices, extras ignored
+			Total Influencers:  18944
+			Avg # of influencers per vertex:  2.0933
+			Highest # of influencers observed:  11, num vertices with this:  31
+			exported as 8 influencers
+			num skeletonWeights and skeletonIndices:  72400
+	Mesh: baseBody2:Group29620.003 has un-applied transformations.  This will never work for a mesh with an armature.  Export cancelled
+========= end of processing =========
+elapsed time:  0 min, 6.6758 secs

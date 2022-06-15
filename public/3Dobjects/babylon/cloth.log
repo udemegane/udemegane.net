@@ -1,0 +1,94 @@
+Exporter version: 2.93.5, Blender version: 2.93.5
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		Inline textures     :  false
+		Material Type       :  PBR
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		Keep Z-up r-handed  :  no
+		Texture directory   :  G:\3DCG\Projects\Protagonist\mainCharacter\assets\babylon\
+	Python World class constructor completed
+	WARNING: No active camera has been assigned, or is not in a currently enabled collection
+	processing begun of skeleton:  Armature, id:  0
+		processing begun of bone:  root_cloth, index:  0
+		processing begun of bone:  pelvis, index:  1
+		processing begun of bone:  thigh_stretch.l, index:  2
+		processing begun of bone:  leg_stretch.l, index:  3
+		processing begun of bone:  foot.l, index:  4
+		processing begun of bone:  toes_01.l, index:  5
+		processing begun of bone:  thigh_stretch.r, index:  6
+		processing begun of bone:  leg_stretch.r, index:  7
+		processing begun of bone:  foot.r, index:  8
+		processing begun of bone:  toes_01.r, index:  9
+		processing begun of bone:  spine_01.x, index:  10
+		processing begun of bone:  ribbon_root, index:  11
+		processing begun of bone:  phys_ribbon_01_upper_r, index:  12
+		processing begun of bone:  phys_ribbon_02_upper_r, index:  13
+		processing begun of bone:  phys_ribbon_01_upper_l, index:  14
+		processing begun of bone:  phys_ribbon_02_upper_l, index:  15
+		processing begun of bone:  phys_ribbon_01_bottom_l, index:  16
+		processing begun of bone:  phys_ribbon_02_bottom_l, index:  17
+		processing begun of bone:  phys_ribbon_03_bottom_l, index:  18
+		processing begun of bone:  phys_ribbon_01_bottom_r, index:  19
+		processing begun of bone:  phys_ribbon_02_bottom_r, index:  20
+		processing begun of bone:  phys_ribbon_03_bottom_l.001, index:  21
+		processing begun of bone:  nawa_root, index:  22
+		processing begun of bone:  phys_nawa_01_r, index:  23
+		processing begun of bone:  phys_nawa_02_r, index:  24
+		processing begun of bone:  phys_nawa_03_r, index:  25
+		processing begun of bone:  phys_nawa_01_l, index:  26
+		processing begun of bone:  phys_nawa_02_l, index:  27
+		processing begun of bone:  phys_nawa_03_l, index:  28
+		processing begun of bone:  spine_02.x, index:  29
+		processing begun of bone:  c_chest.l, index:  30
+		processing begun of bone:  c_chest.r, index:  31
+		processing begun of bone:  spine_03.x, index:  32
+		processing begun of bone:  shoulder.l, index:  33
+		processing begun of bone:  arm_stretch.l, index:  34
+		processing begun of bone:  forearm_stretch.l, index:  35
+		processing begun of bone:  neck, index:  36
+		processing begun of bone:  shoulder.r, index:  37
+		processing begun of bone:  arm_stretch.r, index:  38
+		processing begun of bone:  forearm_stretch.r, index:  39
+		processing begun of bone:  phys_skirt_01_l, index:  40
+		processing begun of bone:  phys_skirt_02_l, index:  41
+		processing begun of bone:  phys_skirt_03_l, index:  42
+		processing begun of bone:  phys_skirt_01_back_l, index:  43
+		processing begun of bone:  phys_skirt_02_back_l, index:  44
+		processing begun of bone:  phys_skirt_03_back_l, index:  45
+		processing begun of bone:  phys_skirt_01_front_l, index:  46
+		processing begun of bone:  phys_skirt_02_front_l, index:  47
+		processing begun of bone:  phys_skirt_03_front_l, index:  48
+		processing begun of bone:  phys_skirt_01_r, index:  49
+		processing begun of bone:  phys_skirt_02_r, index:  50
+		processing begun of bone:  phys_skirt_03_r, index:  51
+		processing begun of bone:  phys_skirt_01_back_r, index:  52
+		processing begun of bone:  phys_skirt_02_back_r, index:  53
+		processing begun of bone:  phys_skirt_03_back_r, index:  54
+		processing begun of bone:  phys_skirt_01_front_r, index:  55
+		processing begun of bone:  phys_skirt_02_front_r, index:  56
+		processing begun of bone:  phys_skirt_03_front_r, index:  57
+	processing begun of mesh:  cloth_uv14:Group64625
+		processing begun of material:  lambert3
+		Custom split normals with tangents being used
+		num positions      :  55740
+		num normals        :  55740
+		num tangents       :  222960
+		num uvs            :  111480
+		num uvs2           :  0
+		num colors         :  0
+		num triangles      :  43572
+		Skeleton stats:  
+			Total Influencers:  81093
+			Avg # of influencers per vertex:  1.4548
+			Highest # of influencers observed:  5, num vertices with this:  33
+			exported as 5 influencers
+			num skeletonWeights and skeletonIndices:  445920
+========= Writing of JSON file started =========
+	writing mesh:  cloth_uv14:Group64625
+========= Writing of JSON file completed =========
+========= end of processing =========
+elapsed time:  0 min, 13.5428 secs
