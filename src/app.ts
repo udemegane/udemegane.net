@@ -131,6 +131,6 @@ export const main = async () => {
       console.warn("読み込みが終わってないよ");
     }
   });
-  onAppEventObservable.notifyObservers({ tag: SceneType.Debug });
+  onAppEventObservable.notifyObservers({ tag: SceneType.Title });
 };
 main();
