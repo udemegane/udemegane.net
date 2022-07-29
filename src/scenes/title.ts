@@ -534,10 +534,28 @@ export const titleScene: SceneScript = (
       twitterMesh.position = initParams.twitter.position;
       twitterMesh.rotation = initParams.twitter.rotation;
       twitterMesh.scaling = initParams.twitter.scale;
+      console.log("test: twitter");
     } else {
       console.warn("twitterMesh is not instance of babylon Mesh");
     }
   });
+  SceneLoader.ImportMesh(
+    "",
+    "3Dobjects/babylon/",
+    "IdleanimWithMesh.glb",
+    scene,
+    (meshes, _, skeletons) => {
+      console.log(`test`);
+      const anim = scene.beginAnimation(skeletons[0], 0, 311, true, 1.0);
+      console.info(`anim: ${anim}`);
+      // const anchor = new TransformNode("anchor");
+      meshes.forEach((mesh) => {
+        mesh.position = new Vector3(-2.9, -0.8, 3);
+        mesh.rotation = new Vector3(0, 4.7, 0);
+        console.info(`set trs`);
+      });
+    }
+  );
   // const iv = Buffer.from(env_iv, "hex");
   // console.log(iv);
   const sceneMetaData: SceneData = {
